@@ -1,44 +1,46 @@
 import { useState } from "react";
 
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [todos, setTodos] = useState([]);
-  const calculation = expensiveCalculation(count);
+  const [counter, setCounter] = useState(0);
+  const [taskList, setTaskList] = useState([]);
+  const costlyResult = costlyComputation(counter);
 
-  const increment = () => {
-    setCount((c) => c + 1);
+  const incrementCounter = () => {
+    setCounter((prevCount) => prevCount + 1);
   };
-  const addTodo = () => {
-    setTodos((t) => [...t, "New Todo"]);
+
+  const addNewTask = () => {
+    setTaskList((prevTasks) => [...prevTasks, "New Task"]);
   };
 
   return (
     <div>
       <div>
-        <h2>My Todos</h2>
-        {todos.map((todo, index) => {
-          return <p key={index}>{todo}</p>;
-        })}
-        <button onClick={addTodo}>Add Todo</button>
+        <h2>Task List</h2>
+        {taskList.map((task, index) => (
+          <p key={index}>{task}</p>
+        ))}
+        <button onClick={addNewTask}>Add Task</button>
       </div>
       <hr />
       <div>
-        Count: {count}
-        <button onClick={increment}>+</button>
-        <h2>Expensive Calculation</h2>
-        {calculation}
+        Count: {counter}
+        <button onClick={incrementCounter}>+</button>
+        <h2>Costly Computation Result</h2>
+        {costlyResult}
       </div>
     </div>
   );
 };
 
-const expensiveCalculation = (num) => {
-  console.log("Calculating...");
+const costlyComputation = (value) => {
+  console.log("Performing costly computation...");
+  console.time("Costly Computation Time");
   for (let i = 0; i < 1000000000; i++) {
-    num += 1;
+    value += 1;
   }
-  return num;
+  console.timeEnd("Costly Computation Time");
+  return value;
 };
 
 export default App;
-
