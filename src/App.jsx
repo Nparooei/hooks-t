@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState,useMemo } from "react";
 
 const App = () => {
   const [counter, setCounter] = useState(0);
   const [taskList, setTaskList] = useState([]);
-  const costlyResult = costlyComputation(counter);
+  const costlyResult = useMemo(()=>costlyComputation(counter),[counter]);
 
   const incrementCounter = () => {
     setCounter((prevCount) => prevCount + 1);
