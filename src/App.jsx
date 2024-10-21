@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,lazy,Suspense } from 'react';
 import Profile from './components/Profile';
-import Analytics from './components/Analytics'; // Loaded immediately, even if not needed
+
+
+const Analytics=lazy(()=>import('./components/Analytics'));
 
 function App() {
   const [showAnalytics, setShowAnalytics] = useState(false);
@@ -17,7 +19,11 @@ function App() {
       </button>
 
       {/* Analytics is loaded along with the App, even if not needed */}
-      {showAnalytics && <Analytics />}
+      {showAnalytics && 
+      <Suspense fallback={<div>loading ....</div>}>
+        <Analytics />
+      </Suspense>
+      }
     </div>
   );
 }
