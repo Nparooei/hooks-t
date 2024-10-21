@@ -1,28 +1,25 @@
-import { useState, useCallback } from "react";
-import TaskList from "./components/TaskList";
+import React, { useState } from 'react';
+import Profile from './components/Profile';
+import Analytics from './components/Analytics'; // Loaded immediately, even if not needed
 
-const App = () => {
-  const [taskCount, setTaskCount] = useState(0);
-  const [taskArray, setTaskArray] = useState([]);
-
-  const increaseCount = () => {
-    setTaskCount((prevCount) => prevCount + 1);
-  };
-
-  const addTask = useCallback(() => {
-    setTaskArray((prevTasks) => [...prevTasks, "New Task"]);
-  }, [taskArray]);
+function App() {
+  const [showAnalytics, setShowAnalytics] = useState(false);
 
   return (
-    <>
-      <TaskList tasks={taskArray} addTask={addTask} />
-      <hr />
-      <div>
-        Count: {taskCount}
-        <button onClick={increaseCount}>+</button>
-      </div>
-    </>
+    <div>
+      <h1>Dashboard</h1>
+
+      {/* Profile is loaded immediately */}
+      <Profile />
+
+      <button onClick={() => setShowAnalytics(!showAnalytics)}>
+        {showAnalytics ? 'Hide Analytics' : 'Show Analytics'}
+      </button>
+
+      {/* Analytics is loaded along with the App, even if not needed */}
+      {showAnalytics && <Analytics />}
+    </div>
   );
-};
+}
 
 export default App;
